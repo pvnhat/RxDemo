@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+    <Button
+        android:id="@+id/btn_flowable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/flowable"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/edt_keyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_flowable"
+        app:layout_constraintWidth_percent=".5"
+        />
+
+    <Button
+        android:id="@+id/btb_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/search"
+        app:layout_constraintStart_toEndOf="@+id/edt_keyword"
+        app:layout_constraintTop_toBottomOf="@+id/btn_flowable"
+        />
+
+    <Button
+        android:id="@+id/btn_just"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/just"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_keyword"
+        />
+
+    <Button
+        android:id="@+id/btn_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from"
+        app:layout_constraintStart_toEndOf="@id/btn_just"
+        app:layout_constraintTop_toBottomOf="@+id/edt_keyword"
+        />
+
+    <Button
+        android:id="@+id/btn_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create"
+        app:layout_constraintStart_toEndOf="@+id/btn_from"
+        app:layout_constraintTop_toBottomOf="@+id/edt_keyword"
+        />
+
+    <Button
+        android:id="@+id/btn_defer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/defer"
+        app:layout_constraintStart_toEndOf="@+id/btn_create"
+        app:layout_constraintTop_toBottomOf="@+id/edt_keyword"
+        />
+
+
+    <Button
+        android:id="@+id/btn_never"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/never"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_defer"
+        />
+
+    <Button
+        android:id="@+id/btn_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/range"
+        app:layout_constraintStart_toEndOf="@+id/btn_never"
+        app:layout_constraintTop_toBottomOf="@+id/btn_from"
+        />
+
+    <Button
+        android:id="@+id/btn_from_iterable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_iterable"
+        app:layout_constraintStart_toEndOf="@+id/btn_range"
+        app:layout_constraintTop_toBottomOf="@+id/btn_from"
+        />
+
+    <Button
+        android:id="@+id/btn_from_array"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_array"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_never"
+        />
+
+    <Button
+        android:id="@+id/btn_from_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_action"
+        app:layout_constraintStart_toEndOf="@+id/btn_from_array"
+        app:layout_constraintTop_toBottomOf="@+id/btn_never"
+        />
+
+    <Button
+        android:id="@+id/btn_runnable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_runnable"
+        app:layout_constraintStart_toEndOf="@+id/btn_from_action"
+        app:layout_constraintTop_toBottomOf="@+id/btn_never"
+        />
+
+    <Button
+        android:id="@+id/btn_future"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_runnable"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_from_array"
+        />
+
+    <Button
+        android:id="@+id/btn_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timer"
+        app:layout_constraintStart_toEndOf="@+id/btn_future"
+        app:layout_constraintTop_toBottomOf="@+id/btn_from_array"
+        />
+    <Button
+        android:id="@+id/btn_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty"
+        app:layout_constraintStart_toEndOf="@+id/btn_timer"
+        app:layout_constraintTop_toBottomOf="@+id/btn_from_array"
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

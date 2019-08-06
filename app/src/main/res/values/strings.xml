@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RxDemo</string>
+    <string name="flowable">Flowable</string>
+    <string name="just">Just</string>
+    <string name="from">From</string>
+    <string name="search">Search</string>
+    <string name="create">Create</string>
+    <string name="defer">Defer</string>
+    <string name="never">Never</string>
+    <string name="repeat">Repeat</string>
+    <string name="range">Range</string>
+    <string name="start">Start</string>
+    <string name="from_iterable">From Iterable</string>
+    <string name="from_array">From Array</string>
+    <string name="from_action">From Action</string>
+    <string name="from_runnable">From Runnable</string>
+    <string name="hello">Hello!!!</string>
+    <string name="timer">Timer</string>
+    <string name="empty">Empty</string>
+</resources>
