@@ -14,18 +14,20 @@ import io.reactivex.functions.Action
 import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import org.reactivestreams.Publisher
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+
+class CreatingObActivity : AppCompatActivity() {
 
     private val index = MutableLiveData<String>()
     private var disposable = CompositeDisposable()
-    private var createSingle: Single<String>? = null
-    private var justSingle: Single<Int>? = null
-    private var deferSingle: Single<String>? = null
+    private var createFlowable: Flowable<String>? = null
+    private var justSingle: Single<String>? = null
+    private var deferFlowable: Flowable<String>? = null
     private var neverObservable: Observable<String>? = null
-    private var lastIndex: Int? = null
+    private var lastName: String? = null
     private var singleRange: Flowable<Int>? = null
     private var fromIterableFlowable: Flowable<Int>? = null
     private var fromArrayFlowable: Flowable<Int>? = null
@@ -34,7 +36,8 @@ class MainActivity : AppCompatActivity() {
     private var runnableCompletable: Completable? = null
     private var fromFutureSingle: Single<Any>? = null
     private var timeSingle: Single<Long>? = null
-    private var erroCompletable: Completable? = null
+    private var errorCompletable: Completable? = null
+    private var repeatFlowable: Flowable<Int>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_just.setOnClickListener {
-            lastIndex = 1
+            lastName = "new just"
             justSingle?.subscribe({
                 index.value = it.toString()
             }, {
@@ -74,20 +77,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_create.setOnClickListener {
-            lastIndex = 1
-            createSingle?.subscribe({
-                index.value = it
+            lastName = "new Create"
+            createFlowable?.subscribe({
+                makeLog(it)
             }, {
-                index.value = it.message
+                it.message?.let { it1 -> makeLog(it1) }
             })
         }
 
         btn_defer.setOnClickListener {
-            lastIndex = 2
-            deferSingle?.subscribe({
-                index.value = it
+            lastName = "new defer "
+            deferFlowable?.subscribe({
+                makeLog(it)
             }, {
-                index.value = it.message
+                it.message?.let { it1 -> makeLog(it1) }
             })
         }
 
@@ -100,34 +103,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_range.setOnClickListener {
-            singleRange?.subscribe({
-                index.value = it.toString()
-            }, {
-                index.value = it.message
-            })
+            singleRange?.subscribe {
+                makeLog(it.toString())
+            }
         }
 
         btn_from_iterable.setOnClickListener {
             fromIterableFlowable?.subscribe({
-                Log.d("iterable", it.toString())
+                makeLog("iterable $it")
             }, {
-                Log.d("iterable err", it.message)
+                makeLog("iterable ${it.message}")
             })
         }
 
         btn_from_array.setOnClickListener {
             fromArrayFlowable?.subscribe({
-                Log.d("ccc array", it.toString())
+                makeLog(it.toString())
             }, {
-                Log.d("ccc array err", it.toString())
+                it.message?.let { it1 -> makeLog(it1) }
             })
         }
 
         btn_from_action.setOnClickListener {
             fromActionCompletable?.subscribe({
-                index.value = "action was done!"
+                makeLog("action was done!")
             }, {
-                index.value = it.message
+                makeLog("err: ${it.message}")
             })
         }
 
@@ -154,22 +155,44 @@ class MainActivity : AppCompatActivity() {
                 index.value = it.message
             })
         }
+
+        btn_next.setOnClickListener {
+            startActivity(TransformingActivity.newInstance(this))
+        }
+
+        btn_check.setOnClickListener {
+            lastName = "new defer2 "
+            deferFlowable?.subscribe({
+                index.value = it
+            }, {
+                index.value = it.message
+            })
+        }
+
+        btn_repeat.setOnClickListener {
+            repeatFlowable?.subscribe({
+                makeLog("repeat: " + it.toString())
+            }, {
+                it.message?.let { it1 -> makeLog(it1) }
+            })
+        }
     }
 
     private fun initData() {
 
-        lastIndex = 3
+        repeatFlowable = Flowable.just(1, 2).repeat(2)
 
         val action = Action {
             try {
-                Toast.makeText(this, "Action is running!", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Action is running!",
+                //    Toast.LENGTH_SHORT).show() //Can't toast on a thread that has not called Looper.prepare()
+
                 doSomeThings("fromAction")
-                val c = 3 / 0
+                // val c = 3/0 divide by zero
             } catch (e: Exception) {
                 throw e
             }
-
-        } // action must be not return
+        }
 
         val runnable = Runnable {
             try {
@@ -183,9 +206,10 @@ class MainActivity : AppCompatActivity() {
 
         val executor = Executors.newSingleThreadScheduledExecutor()
         val future = executor.schedule({
-            Log.d("cccc", "thread " + Thread.currentThread())
+            makeLog(Thread.currentThread().toString())
             doSomeThings("fromFuture")
-        }, 1, TimeUnit.SECONDS)
+
+        }, 2, TimeUnit.SECONDS)
         fromFutureSingle = Single.fromFuture(future).subscribeOn(Schedulers.io()).observeOn(
             AndroidSchedulers.mainThread()
         )
@@ -193,7 +217,8 @@ class MainActivity : AppCompatActivity() {
         runnableCompletable = Completable.fromRunnable(runnable)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
-        fromActionCompletable = Completable.fromAction(action).subscribeOn(Schedulers.io())
+        fromActionCompletable = Completable.fromAction(action)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
         callableFowable = Flowable.fromCallable {
@@ -204,43 +229,68 @@ class MainActivity : AppCompatActivity() {
                 return@Predicate it == 2
             }).observeOn(AndroidSchedulers.mainThread())
 
-//        fromArrayFlowable = Flowable.fromArray(doSomeThings2(69), 2, doSomeThings2(96), 4, 4, 5, 6,
-//            124, 13, 12, 3, 1, 2, 3, 4, 1,
-//            1, 1, 2, 3, 3).subscribeOn(
-//            Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread()) // always run on thread which calls it
+        // always run on thread which calls it
+        val lista = listOf(1, 23, 4, 5)
+        val fromFlowable = Observable.fromArray(lista)
+            .subscribe {
+                makeLog("from " + it)
+            }
 
-//        fromIterableFlowable = Flowable.fromIterable(doSomeThings("fromIterable")).subscribeOn(
-//            Schedulers.computation())
-//            .observeOn(AndroidSchedulers.mainThread()) // always run on thread which calls it
+        val justFlowable = Observable.just(lista)
+            .subscribe {
+                makeLog("just $it")
+            }
+
+        val listB = listOf(1, 23, 4, 5, "saa")
+        val fromIterableFlowable = Flowable.fromIterable(listB).subscribe {
+            makeLog("fromInterable " + it.toString())
+        }
 
 
-//        val intervalFlowable = Flowable.interval(5, TimeUnit.SECONDS).subscribeOn(
-//            Schedulers.computation()
-//        ).observeOn(AndroidSchedulers.mainThread()).subscribe({
-//            //  long is times subscribe
-//            Toast.makeText(this, " interval doSomeThing  $it", Toast.LENGTH_SHORT).show()
-//        }, {
-//            Toast.makeText(this, "interval err", Toast.LENGTH_SHORT).show()
-//        })
+//        intervalFlowable = Flowable.interval(5, TimeUnit.SECONDS)
+//            .subscribeOn(Schedulers.computation())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ repeatNum ->
+//                if (repeatNum == 5.toLong()) return@subscribe
+//                if (repeatNum == 10.toLong()) this.intervalFlowable?.dispose()
+//
+//                // do something
+//                makeLog("doSomething $repeatNum")
+//            }, { e ->
+//                makeLog("error ${e.message}")
+//            })
 
-        // disposable.add(intervalFlowable)
+        val justVar = Observable.fromArray(lista)
+            .subscribe {
+                makeLog(it.toString())
+            }
 
-        singleRange = Flowable.range(3, 8)
-            .subscribeOn(Schedulers.computation())
+        val singleRange = Flowable.range(3, 8).subscribe {
+            makeLog(it.toString())
+        }
+
+
+//        justSingle = Single.just(lastName)
+
+        createFlowable = Flowable.create(FlowableOnSubscribe<String> { emitter ->
+            val task1 = doSomeThings2(1)
+            if (task1 == 1) emitter.onNext("task $task1")
+            val task2 = doSomeThings2(2)
+            if (task2 == 2) emitter.onNext("task $task2")
+            val task3 = doSomeThings2(3)
+            if (task3 == 3) {
+                emitter.onNext("task $task3")
+                emitter.onComplete()
+            }
+            val task4 = doSomeThings2(4)
+            if (task4 == 4) emitter.onNext("task $task4")
+
+
+            if (task1 == 0 || task2 == 0 || task3 == 0) emitter.onError(Throwable("error"))
+
+        }, BackpressureStrategy.BUFFER)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
-
-
-        justSingle = Single.just(lastIndex)
-
-        createSingle = Single.create<String> { emitter ->
-            Single.just(lastIndex).subscribe({
-                emitter.onSuccess("create $it")
-            }, {
-                emitter.onError(Throwable("fail"))
-            })
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
         disposable.add(RxTextView.textChanges(edt_keyword)
             .observeOn(AndroidSchedulers.mainThread())
@@ -250,23 +300,24 @@ class MainActivity : AppCompatActivity() {
                 index.postValue(text.length.toString())
             })
 
-        deferSingle = Single.defer {
-            SingleSource<String> { emitter ->
-                Single.just(lastIndex).subscribe({
-                    emitter.onSuccess("defer $it")
-                }, {
-                    emitter.onError(Throwable("fail"))
-                })
+        lastName = "old"
+        deferFlowable = Flowable.defer {
+            Publisher<String> { emiter ->
+                val a = doSomeThings(lastName!!)
+                emiter.onNext(a.last().toString())
+                emiter.onComplete()
             }
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
         // to create a delay and then do task afterward
-        timeSingle = Single.timer(4, TimeUnit.SECONDS).observeOn(Schedulers.io()).observeOn(
-            AndroidSchedulers.mainThread())
+        timeSingle = Single.timer(4, TimeUnit.SECONDS)
+            .observeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
         // sign an error which is available or is created through compiling
-        erroCompletable = Completable.error(Exception("test error"))
+        errorCompletable = Completable.error(Exception("test error"))
+
 
     }
 
@@ -274,19 +325,23 @@ class MainActivity : AppCompatActivity() {
         val list = mutableListOf<Int>()
         for (i in 0 until 4) {
             Thread.sleep(1000)
-            Log.d("cccc", "$type: $i")
+            makeLog("$type $i")
             list.add(i)
         }
         return list
     }
 
     private fun doSomeThings2(num: Int): Int {
-        Thread.sleep(3000)
+        Thread.sleep(2000)
         return num
     }
 
     override fun onStop() {
         super.onStop()
         disposable.clear()
+    }
+
+    private fun makeLog(mess: String) {
+        Log.d("demooo", mess)
     }
 }
