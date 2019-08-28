@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TransformingActivity"
+    >
+
+    <Button
+        android:id="@+id/btn_buffer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buffer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_cast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cast"
+        app:layout_constraintLeft_toRightOf="@+id/btn_buffer"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_concat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/concat"
+        app:layout_constraintLeft_toRightOf="@+id/btn_cast"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_switch_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_map"
+        app:layout_constraintLeft_toRightOf="@+id/btn_concat_map"
+        app:layout_constraintTop_toBottomOf="@+id/btn_window"
+        />
+
+    <Button
+        android:id="@+id/btn_merge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/merge"
+        app:layout_constraintLeft_toRightOf="@id/btn_zip"
+        app:layout_constraintTop_toBottomOf="@id/btn_map"
+        />
+
+    <Button
+        android:id="@+id/btn_concat_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/concatmap"
+        app:layout_constraintLeft_toRightOf="@id/btn_merge"
+        app:layout_constraintTop_toBottomOf="@id/btn_map"
+        />
+    <Button
+        android:id="@+id/btn_zip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_group_by"
+        />
+
+    <Button
+        android:id="@+id/btn_flat_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/flat_map"
+        app:layout_constraintLeft_toRightOf="@id/btn_concat"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_group_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/group_by"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cast"
+        />
+
+    <Button
+        android:id="@+id/btn_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/map"
+        app:layout_constraintStart_toEndOf="@+id/btn_group_by"
+        app:layout_constraintTop_toBottomOf="@id/btn_cast"
+        />
+
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scan"
+        app:layout_constraintStart_toEndOf="@+id/btn_map"
+        app:layout_constraintTop_toBottomOf="@id/btn_cast"
+        />
+
+    <Button
+        android:id="@+id/btn_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/window"
+        app:layout_constraintStart_toEndOf="@id/btn_scan"
+        app:layout_constraintTop_toBottomOf="@id/btn_flat_map"
+        />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nothing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

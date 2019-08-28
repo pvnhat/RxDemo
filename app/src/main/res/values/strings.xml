@@ -17,4 +17,20 @@
     <string name="hello">Hello!!!</string>
     <string name="timer">Timer</string>
     <string name="empty">Empty</string>
+    <string name="next">Next</string>
+    <string name="buffer">Buffer</string>
+    <string name="nothing">Nothing</string>
+    <string name="cast">Cast</string>
+    <string name="concatmap">ConcatMap</string>
+    <string name="flat_map">FlatMap</string>
+    <string name="group_by">Group By</string>
+    <string name="map">Map</string>
+    <string name="scan">Scan</string>
+    <string name="window">Window</string>
+    <string name="check">Check</string>
+    <string name="from_future">From Future</string>
+    <string name="zip">Zip</string>
+    <string name="merge">Merge</string>
+    <string name="concat">Concat</string>
+    <string name="switch_map">Switch Map</string>
 </resources>
