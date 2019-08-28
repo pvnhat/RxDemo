@@ -227,8 +227,8 @@ class TransformingActivity : AppCompatActivity() {
         }
 
         btn_window.setOnClickListener {
-            windowFlowable?.subscribe {
-                it.subscribe {
+            windowFlowable?.subscribe { flowable ->
+                flowable.subscribe {
                     makeLog(it.toString())
                 }
             }
@@ -244,10 +244,6 @@ class TransformingActivity : AppCompatActivity() {
             list.add(i)
         }
         return list
-    }
-
-    private fun makeLog(mess: String) {
-        Log.d("demooo", mess)
     }
 
     companion object {

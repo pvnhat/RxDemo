@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FilteringObActivity"
+    >
+
+    <Button
+        android:id="@+id/btn_debounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/debounce"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_result"
+        />
+
+    <Button
+        android:id="@+id/btn_distinct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/distinct"
+        app:layout_constraintLeft_toRightOf="@id/btn_debounce"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        />
+
+    <Button
+        android:id="@+id/btn_element_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/element_at"
+        app:layout_constraintLeft_toRightOf="@id/btn_distinct"
+        app:layout_constraintTop_toBottomOf="@id/tv_result"
+        />
+
+    <Button
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/filter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_debounce"
+        />
+
+    <Button
+        android:id="@+id/btn_single"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/first"
+        app:layout_constraintLeft_toRightOf="@+id/btn_filter"
+        app:layout_constraintTop_toBottomOf="@id/btn_debounce"
+        />
+
+    <Button
+        android:id="@+id/btn_ignore_element"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/ignore_element"
+        app:layout_constraintLeft_toRightOf="@+id/btn_single"
+        app:layout_constraintTop_toBottomOf="@id/btn_debounce"
+        />
+
+    <Button
+        android:id="@+id/btn_sample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/sample"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_filter"
+        />
+
+    <Button
+        android:id="@+id/btn_take"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/take"
+        app:layout_constraintLeft_toRightOf="@+id/btn_sample"
+        app:layout_constraintTop_toBottomOf="@id/btn_filter"
+        />
+
+    <Button
+        android:id="@+id/btn_time_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/timeout"
+        app:layout_constraintStart_toEndOf="@+id/btn_take"
+        app:layout_constraintTop_toBottomOf="@id/btn_filter"
+        />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/result"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
