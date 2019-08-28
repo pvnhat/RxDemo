@@ -1,7 +1,6 @@
 package com.example.rxdemo
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -13,12 +12,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.creating_activity.*
 import org.reactivestreams.Publisher
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
+/**
+ * Uncomment makeLog(...) to see result from Log
+ */
 class CreatingObActivity : AppCompatActivity() {
 
     private val index = MutableLiveData<String>()
@@ -41,7 +43,7 @@ class CreatingObActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.creating_activity)
         initData()
         observer()
         handleEvent()
@@ -79,18 +81,18 @@ class CreatingObActivity : AppCompatActivity() {
         btn_create.setOnClickListener {
             lastName = "new Create"
             createFlowable?.subscribe({
-                makeLog(it)
+                //makeLog("create: $it")
             }, {
-                it.message?.let { it1 -> makeLog(it1) }
+                //makeLog("create Er: ${it.message}")
             })
         }
 
         btn_defer.setOnClickListener {
             lastName = "new defer "
             deferFlowable?.subscribe({
-                makeLog(it)
+                //makeLog("defer: $it")
             }, {
-                it.message?.let { it1 -> makeLog(it1) }
+                // makeLog("defer Er: ${it.message}")
             })
         }
 
@@ -104,31 +106,31 @@ class CreatingObActivity : AppCompatActivity() {
 
         btn_range.setOnClickListener {
             singleRange?.subscribe {
-                makeLog(it.toString())
+                // makeLog(it.toString())
             }
         }
 
         btn_from_iterable.setOnClickListener {
             fromIterableFlowable?.subscribe({
-                makeLog("iterable $it")
+                //makeLog("iterable $it")
             }, {
-                makeLog("iterable ${it.message}")
+                //makeLog("iterable ${it.message}")
             })
         }
 
         btn_from_array.setOnClickListener {
             fromArrayFlowable?.subscribe({
-                makeLog(it.toString())
+                // makeLog("fromArray: $it")
             }, {
-                it.message?.let { it1 -> makeLog(it1) }
+                // makeLog("fromArray Er: ${it.message}")
             })
         }
 
         btn_from_action.setOnClickListener {
             fromActionCompletable?.subscribe({
-                makeLog("action was done!")
+                //makeLog("action was done!")
             }, {
-                makeLog("err: ${it.message}")
+                //makeLog("err: ${it.message}")
             })
         }
 
@@ -156,7 +158,7 @@ class CreatingObActivity : AppCompatActivity() {
             })
         }
 
-        btn_next.setOnClickListener {
+        btn_next_to_creating.setOnClickListener {
             startActivity(TransformingActivity.newInstance(this))
         }
 
@@ -171,10 +173,14 @@ class CreatingObActivity : AppCompatActivity() {
 
         btn_repeat.setOnClickListener {
             repeatFlowable?.subscribe({
-                makeLog("repeat: " + it.toString())
+                makeLog("repeat: $it")
             }, {
-                it.message?.let { it1 -> makeLog(it1) }
+                makeLog("repeat Er: ${it.message}")
             })
+        }
+
+        btn_filtering.setOnClickListener {
+            startActivity(FilteringObActivity.newInstance(this))
         }
     }
 
@@ -206,7 +212,7 @@ class CreatingObActivity : AppCompatActivity() {
 
         val executor = Executors.newSingleThreadScheduledExecutor()
         val future = executor.schedule({
-            makeLog(Thread.currentThread().toString())
+            //makeLog(Thread.currentThread().toString())
             doSomeThings("fromFuture")
 
         }, 2, TimeUnit.SECONDS)
@@ -233,17 +239,17 @@ class CreatingObActivity : AppCompatActivity() {
         val lista = listOf(1, 23, 4, 5)
         val fromFlowable = Observable.fromArray(lista)
             .subscribe {
-                makeLog("from " + it)
+                //makeLog("from " + it)
             }
 
         val justFlowable = Observable.just(lista)
             .subscribe {
-                makeLog("just $it")
+                //makeLog("just $it")
             }
 
         val listB = listOf(1, 23, 4, 5, "saa")
         val fromIterableFlowable = Flowable.fromIterable(listB).subscribe {
-            makeLog("fromInterable " + it.toString())
+            //makeLog("fromInterable " + it.toString())
         }
 
 
@@ -262,11 +268,11 @@ class CreatingObActivity : AppCompatActivity() {
 
         val justVar = Observable.fromArray(lista)
             .subscribe {
-                makeLog(it.toString())
+                //makeLog(it.toString())
             }
 
         val singleRange = Flowable.range(3, 8).subscribe {
-            makeLog(it.toString())
+            // makeLog(it.toString())
         }
 
 
@@ -325,7 +331,7 @@ class CreatingObActivity : AppCompatActivity() {
         val list = mutableListOf<Int>()
         for (i in 0 until 4) {
             Thread.sleep(1000)
-            makeLog("$type $i")
+            //makeLog("$type $i")
             list.add(i)
         }
         return list
@@ -341,7 +347,4 @@ class CreatingObActivity : AppCompatActivity() {
         disposable.clear()
     }
 
-    private fun makeLog(mess: String) {
-        Log.d("demooo", mess)
-    }
 }
