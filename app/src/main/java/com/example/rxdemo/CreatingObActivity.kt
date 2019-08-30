@@ -40,6 +40,7 @@ class CreatingObActivity : AppCompatActivity() {
     private var timeSingle: Single<Long>? = null
     private var errorCompletable: Completable? = null
     private var repeatFlowable: Flowable<Int>? = null
+    private var generateFlowable: Flowable<Int>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,15 @@ class CreatingObActivity : AppCompatActivity() {
     }
 
     private fun handleEvent() {
+
+        btn_generate.setOnClickListener {
+            generateFlowable?.subscribe({
+                makeLog("generate: $it")
+            }, {
+                makeLog("generate Err: $it")
+            })
+        }
+
         tv_content.setOnClickListener {
             index.value = getString(R.string.hello)
         }
@@ -182,9 +192,36 @@ class CreatingObActivity : AppCompatActivity() {
         btn_filtering.setOnClickListener {
             startActivity(FilteringObActivity.newInstance(this))
         }
+
+        btn_handle_err.setOnClickListener {
+            startActivity(HandleErrorActivity.newInstance(this))
+        }
+    }
+
+    fun test(state: Int, emitter: Emitter<Int>): Int {
+        emitter.onNext(state)
+        return state + 1
     }
 
     private fun initData() {
+
+        val startValue = 0
+        val incrementValue = 1
+//        val numbers = Observable.generate<Int, Int>({ 1 },
+//            fun(state: Int, emitter: Emitter<Int>): Int {
+//                emitter.onNext(state)
+//                return@generate state + 1
+//            })
+
+        generateFlowable = Flowable.generate<Int, Int>(fun(): Int { return startValue },
+            fun(state: Int, emitter: Emitter<Int>): Int {
+                val nextValue = state + incrementValue
+                emitter.onNext(state + 1)
+                makeLog("state : $state")
+                return nextValue
+
+            })
+
 
         repeatFlowable = Flowable.just(1, 2).repeat(2)
 
@@ -236,15 +273,15 @@ class CreatingObActivity : AppCompatActivity() {
             }).observeOn(AndroidSchedulers.mainThread())
 
         // always run on thread which calls it
-        val lista = listOf(1, 23, 4, 5)
-        val fromFlowable = Observable.fromArray(lista)
+        val lista = listOf(12,34,56,78,90)
+        val fromObservable = Observable.fromArray(lista)
             .subscribe {
-                //makeLog("from " + it)
+                makeLog("from $it")
             }
 
         val justFlowable = Observable.just(lista)
             .subscribe {
-                //makeLog("just $it")
+                makeLog("just $it")
             }
 
         val listB = listOf(1, 23, 4, 5, "saa")
@@ -331,7 +368,7 @@ class CreatingObActivity : AppCompatActivity() {
         val list = mutableListOf<Int>()
         for (i in 0 until 4) {
             Thread.sleep(1000)
-            //makeLog("$type $i")
+            makeLog("$type $i")
             list.add(i)
         }
         return list

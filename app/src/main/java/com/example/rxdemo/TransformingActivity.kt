@@ -153,7 +153,7 @@ class TransformingActivity : AppCompatActivity() {
 
         btn_zip.setOnClickListener {
             zipFlowable?.subscribe({
-                makeLog("zippes: $it")
+                makeLog("zipped: $it")
             }, {
                 makeLog("zip err: ${it.message}")
             })
