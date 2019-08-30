@@ -33,7 +33,7 @@
     <string name="merge">Merge</string>
     <string name="concat">Concat</string>
     <string name="switch_map">Switch Map</string>
-    <string name="creatingob">CreatingOb</string>
+    <string name="creatingob">Creating_Ob</string>
     <string name="filtering">Filtering</string>
     <string name="result">Result</string>
     <string name="debounce">Debounce</string>
@@ -45,4 +45,13 @@
     <string name="sample">Sample</string>
     <string name="take">Take</string>
     <string name="timeout">TimeOut</string>
+    <string name="doonerror">do_On_Error</string>
+    <string name="handleerror">Handle_Error</string>
+    <string name="on_error_complete">On Error Complete</string>
+    <string name="generate">Generate</string>
+    <string name="error_return_ex">Error Return</string>
+    <string name="retry">Retry</string>
+    <string name="on_error_resume">On Error Resume</string>
+    <string name="scheduler">Scheduler</string>
+    <string name="backpressure">Backpressure</string>
 </resources>

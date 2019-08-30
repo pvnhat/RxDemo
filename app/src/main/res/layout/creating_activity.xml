@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,16 +13,6 @@
         android:text="@string/flowable"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <EditText
-        android:id="@+id/edt_keyword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_flowable"
-        app:layout_constraintWidth_percent=".5"
         />
 
     <Button
@@ -72,7 +61,6 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_keyword"
         />
 
-
     <Button
         android:id="@+id/btn_never"
         android:layout_width="wrap_content"
@@ -81,6 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_defer"
         />
+
 
     <Button
         android:id="@+id/btn_range"
@@ -154,6 +143,7 @@
         app:layout_constraintStart_toEndOf="@+id/btn_future"
         app:layout_constraintTop_toBottomOf="@+id/btn_from_array"
         />
+
     <Button
         android:id="@+id/btn_empty"
         android:layout_width="wrap_content"
@@ -163,16 +153,15 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_from_array"
         />
 
-    <TextView
-        android:id="@+id/tv_content"
+    <Button
+        android:id="@+id/btn_generate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/generate"
+        app:layout_constraintLeft_toRightOf="@+id/btn_empty"
+        app:layout_constraintTop_toBottomOf="@id/btn_from_action"
         />
+
     <Button
         android:id="@+id/btn_next_to_creating"
         android:layout_width="wrap_content"
@@ -192,7 +181,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btn_next_to_creating"
         />
-
     <Button
         android:id="@+id/btn_check"
         android:layout_width="wrap_content"
@@ -202,4 +190,33 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
+    <Button
+        android:id="@+id/btn_handle_err"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/handleerror"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next_to_creating"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/edt_keyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_flowable"
+        app:layout_constraintWidth_percent=".5"
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
